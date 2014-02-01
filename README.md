@@ -1,14 +1,29 @@
-phpmulticurl
-============
+# PhpMultiCurl
 
-Ultra fast wrapper for "curl_multi_*" functions
+[![Latest Stable Version](https://poser.pugx.org/dypa/phpmulticurl/v/stable.png)](https://packagist.org/packages/dypa/phpmulticurl)
+[![License](https://poser.pugx.org/dypa/phpmulticurl/license.png)](https://packagist.org/packages/dypa/phpmulticurl)
+[![Total Downloads](https://poser.pugx.org/dypa/phpmulticurl/downloads.png)](https://packagist.org/packages/dypa/phpmulticurl)
 
-Main features:
-- supports events onLoad, onError
-- reuse curl resource
-- dynamic change limits
-- personal preferences for each query (be careful!)
-- support work with the header of outgoing and incoming!
-- simple transmission parameters in the manufacturing function
+Ultra fast OOP wrapper for `curl_multi_*` functions.
 
-php >= 5.2.0 (see: http://www.php.net/manual/ru/function.curl-multi-info-read.php#98147)
+__Pull requests are very welcome.__
+
+## Main features:
+
+* **reuse curl resource**
+* don't waste time on unnecessary cycles, careful works with select function
+* simple queue management
+* fully configured! supports callbacks onLoad, onError, full control on http headers
+* simple usage
+
+## Requires:
+
+* php >= 5.3.0 (but **recomended version is php >=5.5.0**, __it will give x4 perfomance boost__)
+* ext-curl
+* safe_mode = Off
+
+## Installation via composer:
+
+* install composer
+* add in __require__ section `dypa/phpMultiCurl`
+* run `composer install`
