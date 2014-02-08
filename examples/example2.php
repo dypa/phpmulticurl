@@ -4,7 +4,6 @@ use PhpMultiCurl\Helper\Queue as TasksQueue;
 use PhpMultiCurl\PhpMultiCurl;
 use PhpMultiCurl\Task\Http as HttpTask;
 
-
 $queue = new TasksQueue;
 
 $callback = function ($responce, HttpTask $task) {
@@ -22,5 +21,3 @@ $queue->enqueue($task);
 
 $phpMultiCurl = new PhpMultiCurl();
 $phpMultiCurl->executeTasks($queue);
-
-

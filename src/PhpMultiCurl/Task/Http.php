@@ -29,10 +29,10 @@ class Http extends BaseTask
 
     public function callOnLoad(array $curlResult)
     {
-        $result = curl_getinfo($curlResult['handle']);
-        $content = curl_multi_getcontent($curlResult['handle']);
-        $result['response_header'] = substr($content, 0, $result['header_size']);
-        $result['response_content'] = substr($content, $result['header_size']);
+        $result = \curl_getinfo($curlResult['handle']);
+        $content = \curl_multi_getcontent($curlResult['handle']);
+        $result['response_header'] = \substr($content, 0, $result['header_size']);
+        $result['response_content'] = \substr($content, $result['header_size']);
 
         parent::callOnLoad($result);
     }

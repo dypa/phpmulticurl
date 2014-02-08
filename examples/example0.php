@@ -11,11 +11,11 @@ if (isset($_GET['sleep'])) {
     exit;
 }
 
-$onLoad = function ($responce, HttpTask $task) {
+$onLoad = function ($responce) {
     var_dump($responce['response_content']);
 };
 
-$onError = function ($errorCode, $errorString, HttpTask $task) {
+$onError = function ($errorCode, $errorString) {
     var_dump($errorCode);
     var_dump($errorString);
 };
@@ -29,7 +29,6 @@ for ($i = 0; $i < 5; $i++) {
 }
 $task = new HttpTask('http://hostname_does_not_exist/');
 $queue->enqueue($task->setOnError($onError));
-
 
 $phpMultiCurl = new PhpMultiCurl();
 $phpMultiCurl->setNumberOfThreads(2);

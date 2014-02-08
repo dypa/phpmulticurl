@@ -25,7 +25,7 @@ class PhpMultiCurl
 
     public function executeTasks(Queue $queue)
     {
-        if (count($queue) == 0) {
+        if ($queue->count() === 0) {
             throw new Exception('Task queue can\'t be empty');
         }
 

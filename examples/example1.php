@@ -25,13 +25,12 @@ $onLoad = function ($responce, BaseTask $task) {
     }
     flush();
 };
-$onError = function ($errorCode, $errorString, BaseTask $task) {
+$onError = function ($errorCode, $errorString) {
     var_dump(date('H:i:s'));
     var_dump($errorCode);
     var_dump($errorString);
     flush();
 };
-
 
 $queue = new TasksQueue;
 foreach ($urls as $url) {

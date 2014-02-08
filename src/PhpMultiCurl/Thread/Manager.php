@@ -19,9 +19,7 @@ class Manager
         $this->allocateThreads($numberOfThreads);
     }
 
-    //TODO resource
-    public function find( /*resource*/
-        $resource)
+    public function find($resource)
     {
         foreach ($this->threads as $thread) {
             if ($thread->isEqualResource($resource)) {
@@ -29,7 +27,7 @@ class Manager
             }
         }
 
-        throw new Exception ('Epic fail TODO');
+        throw new Exception ('Resource not found in working threads');
     }
 
     protected function allocateThreads($numberOfThreads)
@@ -93,7 +91,7 @@ class Manager
             $ready = $this->multiCurl->selectThread();
             if ($ready) {
                 if ($this->fetchResults($queue)) {
-                    $ready = 0; //UGLY say that thread in use
+                    $ready = 0; //UGLY thread still in use, because of reuse curl resource
                 }
             }
         } while ($ready != -1);
