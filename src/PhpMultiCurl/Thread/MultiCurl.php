@@ -51,7 +51,7 @@ class MultiCurl
 
     public function checkResult(array $result, curlThread $thread)
     {
-        return $result['result'] === \CURLE_OK ? null : [$thread->getErrorCode(), $thread->getErrorMessage()];
+        return $result['result'] === \CURLE_OK ? null : new CurlThreadError($thread->getErrorCode(), $thread->getErrorMessage());
     }
 
     public function __destruct()

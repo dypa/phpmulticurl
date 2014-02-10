@@ -2,6 +2,7 @@
 
 namespace PhpMultiCurl\Task;
 
+use PhpMultiCurl\Thread\CurlThreadError;
 use PhpMultiCurl\Helper\Exception;
 
 abstract class BaseTask
@@ -52,9 +53,9 @@ abstract class BaseTask
         return $this->onErrorCallback;
     }
 
-    public function callOnError($errorCode, $errorString)
+    public function callOnError(CurlThreadError $error)
     {
-        \call_user_func($this->getOnError(), $errorCode, $errorString, $this);
+        \call_user_func($this->getOnError(), $error, $this);
 
         return true;
     }
@@ -62,10 +63,12 @@ abstract class BaseTask
     public function callCallbacks($error, array $result)
     {
         if ($error && $this->getOnError()) {
-            $this->callOnError($error[0], $error[1]);
-        } elseif ($this->getOnLoad()) {
-            $this->callOnload($result);
+            return $this->callOnError($error);
+        } elseif ($error === null && $this->getOnLoad()) {
+            return $this->callOnload($result);
         }
+
+        return false;
     }
 
     public function setData($data)

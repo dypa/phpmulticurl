@@ -4,6 +4,7 @@ use PhpMultiCurl\Helper\Queue as TasksQueue;
 use PhpMultiCurl\PhpMultiCurl;
 use PhpMultiCurl\Task\BaseTask;
 use PhpMultiCurl\Task\Http as HttpTask;
+use PhpMultiCurl\Thread\CurlThreadError;
 
 $urls = [
     'http://google.com',
@@ -14,7 +15,7 @@ $urls = [
 ];
 $value1 = 'foo';
 $value2 = 'bar';
-$onLoad = function ($responce, BaseTask $task) {
+$onLoad = function (array $responce, BaseTask $task) {
     var_dump(date('H:i:s'));
     $data = $task->getData();
     if ($responce['http_code'] == 200) {
@@ -25,10 +26,10 @@ $onLoad = function ($responce, BaseTask $task) {
     }
     flush();
 };
-$onError = function ($errorCode, $errorString) {
+$onError = function (CurlThreadError $error) {
     var_dump(date('H:i:s'));
-    var_dump($errorCode);
-    var_dump($errorString);
+    var_dump($error->getCode());
+    var_dump($error->getMessage());
     flush();
 };
 
