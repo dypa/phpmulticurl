@@ -6,8 +6,8 @@ use PhpMultiCurl\Task\BaseTask;
 
 class CurlThread
 {
-    protected $curlResource;
-    protected $task;
+    protected $curlResource = null;
+    protected $task = null;
 
     public function __construct()
     {

@@ -10,7 +10,7 @@ abstract class BaseTask
     protected $onLoadCallback = null;
     protected $onErrorCallback = null;
     protected $data = null;
-    protected $curlOptions = null;
+    protected $curlOptions = array();
 
     //TODO php >= 5.4 callable
     public function setOnLoad($callback)
