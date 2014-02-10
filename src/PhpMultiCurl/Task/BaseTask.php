@@ -2,8 +2,8 @@
 
 namespace PhpMultiCurl\Task;
 
+use PhpMultiCurl\Helper\InvalidArgumentException;
 use PhpMultiCurl\Thread\CurlThreadError;
-use PhpMultiCurl\Helper\Exception;
 
 abstract class BaseTask
 {
@@ -16,7 +16,7 @@ abstract class BaseTask
     public function setOnLoad($callback)
     {
         if (!\is_callable($callback)) {
-            throw new Exception('Not callble');
+            throw new InvalidArgumentException('Not callble');
         }
 
         $this->onLoadCallback = $callback;
@@ -40,7 +40,7 @@ abstract class BaseTask
     public function setOnError($callback)
     {
         if (!\is_callable($callback)) {
-            throw new Exception('Not callble');
+            throw new InvalidArgumentException('Not callble');
         }
 
         $this->onErrorCallback = $callback;
