@@ -32,7 +32,7 @@ class Manager
 
     protected function allocateThreads($numberOfThreads)
     {
-        for ($i = 0; $i < $numberOfThreads; $i++) {
+        for ($i = 0; $i < $numberOfThreads; ++$i) {
             $this->threads->attach(new CurlThread);
         }
 
@@ -85,16 +85,15 @@ class Manager
             $this->addThreadToLoop($thread, $queue);
         }
 
+        $stillRunning = false;
         do {
             $this->multiCurl->execThreads();
 
             $ready = $this->multiCurl->selectThread();
             if ($ready) {
-                if ($this->fetchResults($queue)) {
-                    $ready = 0; //UGLY thread still in use, because of reuse curl resource
-                }
+                $stillRunning = $this->fetchResults($queue);
             }
-        } while ($ready != -1);
+        } while ($ready != MultiCurl::SELECT_FAILURE_OR_TIMEOUT || $stillRunning);
 
         return true;
     }
@@ -107,9 +106,9 @@ class Manager
             $thread->getTask()->callCallbacks($this->multiCurl->checkResult($result, $thread), $result);
 
             $this->removeThreadFromLoop($thread);
-            $this->addThreadToLoop($thread, $queue);
-
-            $return = true;
+            if ($this->addThreadToLoop($thread, $queue)) {
+                $return = true;
+            }
         }
 
         return $return;

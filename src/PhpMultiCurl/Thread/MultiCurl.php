@@ -5,8 +5,10 @@ use PhpMultiCurl\Helper\Exception;
 
 class MultiCurl
 {
-    const multiCurlSelectTimeout = 0.05;
-    const multiCurlExecTimeout = 100;
+    const SELECT_FAILURE_OR_TIMEOUT = -1;
+
+    const DEFAULT_SELECT_TIMEOUT = 0.05;
+    const DEFAULT_EXEC_TIMEOUT = 100;
 
     protected $multiCurlResource = null;
 
@@ -27,7 +29,7 @@ class MultiCurl
 
     public function selectThread()
     {
-        return \curl_multi_select($this->multiCurlResource, (float)self::multiCurlSelectTimeout);
+        return \curl_multi_select($this->multiCurlResource, (float)self::DEFAULT_SELECT_TIMEOUT);
     }
 
     //NOTE CURLM_CALL_MULTI_PERFORM never returns in libcurl >= 7.20.0
@@ -38,7 +40,7 @@ class MultiCurl
             if (\CURLM_OK !== \curl_multi_exec($this->multiCurlResource, $stillRunning)) {
                 throw new Exception('curl_multi_exec broken');
             }
-            usleep((int)self::multiCurlExecTimeout); //UGLY fix to many loop
+            usleep((int)self::DEFAULT_EXEC_TIMEOUT); //UGLY fix cpu usage
         } while ($stillRunning);
 
         return true;
