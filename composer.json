@@ -1,7 +1,7 @@
 {
     "name": "dypa/phpmulticurl",
-    "description": ".",
-    "keywords": ["curl", "multi curl", "http", "phpmulticurl"],
+    "description": "Ultra fast non-blocking OOP wrapper for curl_multi_* functions.",
+    "keywords": ["curl", "multi", "multicurl", "phpmulticurl", "http", "async", "parallel", "requests", "spider"],
     "license": "MIT",
     "authors": [
         {

@@ -4,7 +4,7 @@
 [![License](https://poser.pugx.org/dypa/phpmulticurl/license.png)](https://packagist.org/packages/dypa/phpmulticurl)
 [![Total Downloads](https://poser.pugx.org/dypa/phpmulticurl/downloads.png)](https://packagist.org/packages/dypa/phpmulticurl)
 
-Ultra fast OOP wrapper for `curl_multi_*` functions.
+Ultra fast non-blocking OOP wrapper for `curl_multi_*` functions.
 
 __Pull requests are very welcome.__
 
