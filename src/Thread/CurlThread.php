@@ -11,7 +11,7 @@ class CurlThread
 
     public function __construct()
     {
-        $this->curlResource = \curl_init();
+        $this->curlResource = curl_init();
     }
 
     public function setTask(BaseTask $task)
@@ -37,29 +37,30 @@ class CurlThread
 
     public function isInUse()
     {
-        return $this->task === null ? false : true;
+        return ! is_null($this->task);
     }
 
     public function isEqualResource($curlResource)
     {
-        return $this->curlResource === $curlResource ? true : false;
+        return $this->curlResource === $curlResource;
     }
 
     protected function resetResourceOptions()
     {
-        if (PHP_VERSION >= 5.5 && \function_exists('curl_reset')) {
-            \curl_reset($this->curlResource);
-        } else {
-            \curl_close($this->curlResource);
-            $this->curlResource = \curl_init();
+        if (PHP_VERSION >= 5.5 && function_exists('curl_reset')) {
+            curl_reset($this->curlResource);
+
+            return $this;
         }
+        curl_close($this->curlResource);
+        $this->curlResource = curl_init();
 
         return $this;
     }
 
     public function applyCurlOptions()
     {
-        \curl_setopt_array($this->curlResource, $this->getTask()->getCurlOptions());
+        curl_setopt_array($this->curlResource, $this->getTask()->getCurlOptions());
 
         return $this;
     }
@@ -71,16 +72,16 @@ class CurlThread
 
     public function getErrorMessage()
     {
-        return \curl_error($this->getResource());
+        return curl_error($this->getResource());
     }
 
     public function getErrorCode()
     {
-        return \curl_errno($this->getResource());
+        return curl_errno($this->getResource());
     }
 
     public function __destruct()
     {
-        \curl_close($this->curlResource);
+        curl_close($this->curlResource);
     }
 }
