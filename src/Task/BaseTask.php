@@ -15,7 +15,7 @@ abstract class BaseTask
     //TODO php >= 5.4 callable
     public function setOnLoad($callback)
     {
-        if (!\is_callable($callback)) {
+        if (!is_callable($callback)) {
             throw new InvalidArgumentException('Not callble');
         }
 
@@ -31,7 +31,7 @@ abstract class BaseTask
 
     public function callOnLoad(array $result)
     {
-        \call_user_func($this->getOnLoad(), $result, $this);
+        call_user_func($this->getOnLoad(), $result, $this);
 
         return true;
     }
@@ -39,7 +39,7 @@ abstract class BaseTask
     //TODO php >= 5.4 callable
     public function setOnError($callback)
     {
-        if (!\is_callable($callback)) {
+        if (!is_callable($callback)) {
             throw new InvalidArgumentException('Not callble');
         }
 
@@ -55,7 +55,7 @@ abstract class BaseTask
 
     public function callOnError(CurlThreadError $error)
     {
-        \call_user_func($this->getOnError(), $error, $this);
+        call_user_func($this->getOnError(), $error, $this);
 
         return true;
     }
@@ -94,5 +94,4 @@ abstract class BaseTask
     {
         return $this->curlOptions;
     }
-
 }
