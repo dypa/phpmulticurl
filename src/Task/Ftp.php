@@ -2,10 +2,9 @@
 
 namespace PhpMultiCurl\Task;
 
-use PhpMultiCurl\Exception;
-use PhpMultiCurl\TaskInterface;
+use PhpMultiCurl\Helper\Exception;
 
-class Ftp implements TaskInterface
+class Ftp
 {
     public function __construct()
     {

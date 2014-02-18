@@ -42,7 +42,7 @@ class CurlThread
 
     public function isEqualResource($curlResource)
     {
-        return $this->curlResource === $curlResource ? true : false;
+        return $this->curlResource === $curlResource;
     }
 
     protected function resetResourceOptions()

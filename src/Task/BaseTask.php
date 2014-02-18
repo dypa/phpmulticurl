@@ -94,5 +94,4 @@ abstract class BaseTask
     {
         return $this->curlOptions;
     }
-
 }
