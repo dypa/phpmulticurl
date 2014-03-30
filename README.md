@@ -27,3 +27,9 @@ __Pull requests are very welcome.__
 * install composer
 * add in __require__ section `dypa/phpMultiCurl`
 * run `composer install`
+
+## Examples
+
+* [load many urls parallel](https://github.com/dypa/phpmulticurl/blob/master/examples/example0.php)
+* [working with options and response](https://github.com/dypa/phpmulticurl/blob/master/examples/example1.php)
+* [load urls in callbacks](https://github.com/dypa/phpmulticurl/blob/master/examples/example2.php)
