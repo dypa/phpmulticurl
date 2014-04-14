@@ -2,7 +2,6 @@
 
 namespace PhpMultiCurl\Task;
 
-use PhpMultiCurl\Helper\InvalidArgumentException;
 use PhpMultiCurl\Thread\CurlThreadError;
 
 abstract class BaseTask
@@ -10,15 +9,10 @@ abstract class BaseTask
     protected $onLoadCallback = null;
     protected $onErrorCallback = null;
     protected $data = null;
-    protected $curlOptions = array();
+    protected $curlOptions = [];
 
-    //TODO php >= 5.4 callable
-    public function setOnLoad($callback)
+    public function setOnLoad(callable $callback)
     {
-        if (!\is_callable($callback)) {
-            throw new InvalidArgumentException('Not callble');
-        }
-
         $this->onLoadCallback = $callback;
 
         return $this;
@@ -36,13 +30,8 @@ abstract class BaseTask
         return true;
     }
 
-    //TODO php >= 5.4 callable
-    public function setOnError($callback)
+    public function setOnError(callable $callback)
     {
-        if (!\is_callable($callback)) {
-            throw new InvalidArgumentException('Not callble');
-        }
-
         $this->onErrorCallback = $callback;
 
         return $this;
