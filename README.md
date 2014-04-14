@@ -18,7 +18,7 @@ __Pull requests are very welcome.__
 
 ## Requires:
 
-* php >= 5.3.0 (but **recomended version is php >=5.5.0**, __it will give x4 perfomance boost__)
+* php >= 5.4.0 (but **recomended version is php >=5.5.0**, __it will give x4 perfomance boost__)
 * ext-curl
 * safe_mode = Off
 
