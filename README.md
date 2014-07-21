@@ -33,3 +33,17 @@ __Pull requests are very welcome.__
 * [load many urls parallel](https://github.com/dypa/phpmulticurl/blob/master/examples/example0.php)
 * [working with options and response](https://github.com/dypa/phpmulticurl/blob/master/examples/example1.php)
 * [load urls in callbacks](https://github.com/dypa/phpmulticurl/blob/master/examples/example2.php)
+
+##Contributing
+
+Fork the project, create a feature branch and send us a pull request.
+
+To ensure a consistent code base, you should make sure the code follows
+the [PSR-1](http://www.php-fig.org/psr/psr-1/), [PSR-2](http://www.php-fig.org/psr/psr-2/) and
+[PSR-4](http://www.php-fig.org/psr/psr-4/) coding standards.
+
+To avoid CS issues, you should use [php-cs-fixer](http://cs.sensiolabs.org/):
+
+```sh
+$ php-cs-fixer fix src/
+```
