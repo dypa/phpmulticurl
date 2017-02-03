@@ -18,15 +18,14 @@ __Pull requests are very welcome.__
 
 ## Requires:
 
-* php >= 5.4.0 (but **recomended version is php >=5.5.0**, __it will give x4 perfomance boost__)
+* php >= 5.6.0
 * ext-curl
 * safe_mode = Off
 
 ## Installation via composer:
 
 * install composer
-* add in __require__ section `dypa/phpMultiCurl`
-* run `composer install`
+* run `composer require dypa/phpMultiCurl`
 
 ## Examples
 
@@ -39,8 +38,7 @@ __Pull requests are very welcome.__
 Fork the project, create a feature branch and send us a pull request.
 
 To ensure a consistent code base, you should make sure the code follows
-the [PSR-1](http://www.php-fig.org/psr/psr-1/), [PSR-2](http://www.php-fig.org/psr/psr-2/) and
-[PSR-4](http://www.php-fig.org/psr/psr-4/) coding standards.
+the [PSR-*](http://www.php-fig.org/psr/) coding standards.
 
 To avoid CS issues, you should use [php-cs-fixer](http://cs.sensiolabs.org/):
 

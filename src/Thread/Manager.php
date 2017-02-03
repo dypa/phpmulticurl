@@ -2,7 +2,6 @@
 
 namespace PhpMultiCurl\Thread;
 
-use PhpMultiCurl\Helper\Exception;
 use PhpMultiCurl\Helper\Queue;
 use SplObjectStorage;
 
@@ -13,8 +12,8 @@ class Manager
 
     public function __construct($numberOfThreads)
     {
-        $this->threads = new SplObjectStorage;
-        $this->multiCurl = new MultiCurl;
+        $this->threads = new SplObjectStorage();
+        $this->multiCurl = new MultiCurl();
 
         $this->allocateThreads($numberOfThreads);
     }
@@ -27,13 +26,13 @@ class Manager
             }
         }
 
-        throw new Exception ('Resource not found in working threads');
+        throw new \InvalidArgumentException('Resource not found in working threads');
     }
 
     protected function allocateThreads($numberOfThreads)
     {
         for ($i = 0; $i < $numberOfThreads; ++$i) {
-            $this->threads->attach(new CurlThread);
+            $this->threads->attach(new CurlThread());
         }
 
         return $this->threads;
@@ -43,11 +42,11 @@ class Manager
     {
         foreach ($this->threads as $thread) {
             if ($thread->isInUse()) {
-                throw new Exception('Thread in use and can not be closed');
+                throw new \RuntimeException('Thread in use and can not be closed');
             }
 
             if (!$this->threads->contains($thread)) {
-                throw new Exception("Thread not found in threads");
+                throw new \OutOfBoundsException('Thread not found in threads');
             }
 
             $this->multiCurl->removeThread($thread);
@@ -93,7 +92,7 @@ class Manager
             if ($ready) {
                 $stillRunning = $this->fetchResults($queue);
             }
-        } while ($ready != MultiCurl::SELECT_FAILURE_OR_TIMEOUT || $stillRunning);
+        } while ($ready !== MultiCurl::SELECT_FAILURE_OR_TIMEOUT || $stillRunning);
 
         return true;
     }

@@ -1,17 +1,18 @@
 <?php
+
 require '../vendor/autoload.php';
 use PhpMultiCurl\Helper\Queue as TasksQueue;
 use PhpMultiCurl\PhpMultiCurl;
 use PhpMultiCurl\Task\Http as HttpTask;
 
-$queue = new TasksQueue;
+$queue = new TasksQueue();
 
-$callback = function (array $responce, HttpTask $task) {
-    var_dump('parent ' . $responce['http_code'] . ' ' . $task->getUrl());
+$callback = function (array $response, HttpTask $task) {
+    var_dump('parent '.$response['http_code'].' '.$task->getUrl());
     global $queue;
     $task = new HttpTask('http://github.com');
-    $task->setOnLoad(function ($responce, HttpTask $task) {
-        var_dump('child ' . $responce['http_code'] . ' ' . $task->getUrl());
+    $task->setOnLoad(function ($response, HttpTask $task) {
+        var_dump('child '.$response['http_code'].' '.$task->getUrl());
     });
     $queue->enqueue($task);
 };

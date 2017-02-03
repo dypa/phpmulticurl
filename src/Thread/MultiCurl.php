@@ -1,7 +1,6 @@
 <?php
-namespace PhpMultiCurl\Thread;
 
-use PhpMultiCurl\Helper\Exception;
+namespace PhpMultiCurl\Thread;
 
 class MultiCurl
 {
@@ -37,9 +36,9 @@ class MultiCurl
         $stillRunning = null;
         do {
             if (\CURLM_OK !== \curl_multi_exec($this->multiCurlResource, $stillRunning)) {
-                throw new Exception('curl_multi_exec broken');
+                throw new \RuntimeException('curl_multi_exec broken');
             }
-            usleep((integer) self::DEFAULT_EXEC_TIMEOUT); //UGLY fix cpu usage
+            usleep((int) self::DEFAULT_EXEC_TIMEOUT); //UGLY fix cpu usage
         } while ($stillRunning);
 
         return true;

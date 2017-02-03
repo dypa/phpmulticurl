@@ -1,4 +1,5 @@
 <?php
+
 require '../vendor/autoload.php';
 
 use PhpMultiCurl\Helper\Queue as TasksQueue;
@@ -12,8 +13,8 @@ if (isset($_GET['sleep'])) {
     exit;
 }
 
-$onLoad = function (array $responce) {
-    var_dump($responce['response_content']);
+$onLoad = function (array $response) {
+    var_dump($response['response_content']);
 };
 
 $onError = function (CurlThreadError $error) {
@@ -21,10 +22,10 @@ $onError = function (CurlThreadError $error) {
     echo $error;
 };
 
-$queue = new TasksQueue;
+$queue = new TasksQueue();
 
-for ($i = 0; $i < 5; $i++) {
-    $task = new HttpTask('http://localhost/phpmulticurl/examples/example0.php?sleep=' . (2 * $i));
+for ($i = 0; $i < 5; ++$i) {
+    $task = new HttpTask('http://localhost/phpmulticurl/examples/example0.php?sleep='.(2 * $i));
     $task->setOnLoad($onLoad)->setOnError($onError);
     $queue->enqueue($task);
 }

@@ -1,4 +1,5 @@
 <?php
+
 namespace PhpMultiCurl\Thread;
 
 class CurlThreadError

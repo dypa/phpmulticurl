@@ -22,6 +22,9 @@ class CurlThread
         return $this;
     }
 
+    /**
+     * @return BaseTask
+     */
     public function getTask()
     {
         return $this->task;
@@ -47,12 +50,7 @@ class CurlThread
 
     protected function resetResourceOptions()
     {
-        if (PHP_VERSION >= 5.5 && \function_exists('curl_reset')) {
-            \curl_reset($this->curlResource);
-        } else {
-            \curl_close($this->curlResource);
-            $this->curlResource = \curl_init();
-        }
+        \curl_reset($this->curlResource);
 
         return $this;
     }
