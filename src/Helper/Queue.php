@@ -13,6 +13,8 @@ class Queue extends SplQueue
             throw new \InvalidArgumentException('Queue accepts only BaseTask instance');
         }
 
+        $task->validate();
+
         return parent::enqueue($task);
     }
 }

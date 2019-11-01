@@ -1,78 +1,72 @@
 <?php
+declare(strict_types=1);
 
 namespace PhpMultiCurl\Thread;
 
 use PhpMultiCurl\Task\BaseTask;
 
-class CurlThread
+final class CurlThread
 {
-    protected $curlResource = null;
-    protected $task = null;
+    private $curlResource = null;
+    private $task = null;
 
     public function __construct()
     {
         $this->curlResource = \curl_init();
     }
 
-    public function setTask(BaseTask $task)
+    public function setTask(BaseTask $task): void
     {
         $this->removeTask();
         $this->task = $task;
-
-        return $this;
     }
 
-    /**
-     * @return BaseTask
-     */
-    public function getTask()
+    public function getTask(): BaseTask
     {
         return $this->task;
     }
 
-    public function removeTask()
+    public function removeTask(): void
     {
         $this->task = null;
+        //TODO close and init if in use
         $this->resetResourceOptions();
-
-        return $this;
     }
 
-    public function isInUse()
+    public function isInUse(): bool
     {
         return $this->task === null ? false : true;
     }
 
-    public function isEqualResource($curlResource)
+    public function isEqualResource($curlResource): bool
     {
         return $this->curlResource === $curlResource;
     }
 
-    protected function resetResourceOptions()
+    private function resetResourceOptions(): void
     {
         \curl_reset($this->curlResource);
-
-        return $this;
     }
 
-    public function applyCurlOptions()
+    public function applyCurlOptions(): void
     {
         \curl_setopt_array($this->curlResource, $this->getTask()->getCurlOptions());
-
-        return $this;
     }
 
+    /**
+     * @return resource
+     */
     public function getResource()
     {
         return $this->curlResource;
     }
 
-    public function getErrorMessage()
+    public function getErrorMessage(): string
     {
         return \curl_error($this->getResource());
     }
 
-    public function getErrorCode()
+    public function getErrorCode(): int
     {
         return \curl_errno($this->getResource());
     }

@@ -1,28 +1,26 @@
 <?php
+declare(strict_types=1);
 
 namespace PhpMultiCurl;
 
 use PhpMultiCurl\Helper\Queue;
 use PhpMultiCurl\Thread\Manager as ThreadsManager;
 
-class PhpMultiCurl
+final class PhpMultiCurl
 {
-    protected $numberOfThreads = 1;
+    private $numberOfThreads = 1;
 
-    public function setNumberOfThreads($number)
+    public function setNumberOfThreads(int $number): void
     {
-        $number = (int) $number;
         $this->numberOfThreads = $number > 0 ? $number : 1;
-
-        return $this;
     }
 
-    public function getNumberOfThreads()
+    public function getNumberOfThreads(): int
     {
         return $this->numberOfThreads;
     }
 
-    public function executeTasks(Queue $queue)
+    public function executeTasks(Queue $queue): bool
     {
         if ($queue->count() === 0) {
             throw new \LogicException('Task queue can not be empty');

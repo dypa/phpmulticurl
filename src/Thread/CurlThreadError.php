@@ -2,28 +2,28 @@
 
 namespace PhpMultiCurl\Thread;
 
-class CurlThreadError
+final class CurlThreadError
 {
-    protected $errorCode = 0;
-    protected $errorString = '';
+    private $errorCode = 0;
+    private $errorString = '';
 
-    public function __construct($errorCode, $errorString)
+    public function __construct(int $errorCode, string $errorString)
     {
         $this->errorCode = $errorCode;
         $this->errorString = $errorString;
     }
 
-    public function getCode()
+    public function getCode(): int
     {
         return $this->errorCode;
     }
 
-    public function getMessage()
+    public function getMessage(): string
     {
         return $this->errorString;
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return $this->getMessage();
     }

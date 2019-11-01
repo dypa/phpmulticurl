@@ -1,8 +1,9 @@
 <?php
+declare(strict_types=1);
 
 namespace PhpMultiCurl\Task;
 
-class Ftp
+final class Ftp
 {
     public function __construct()
     {

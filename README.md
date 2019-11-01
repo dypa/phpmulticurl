@@ -15,10 +15,11 @@ __Pull requests are very welcome.__
 * simple queue management
 * fully configured! supports callbacks onLoad, onError, full control on http headers
 * simple usage
+* no tests, docs :( sorry :(
 
 ## Requires:
 
-* php >= 5.6.0
+* php >= 7.3.10
 * ext-curl
 * safe_mode = Off
 

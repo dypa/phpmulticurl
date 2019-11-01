@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PhpMultiCurl\Task;
 
@@ -18,12 +19,12 @@ abstract class BaseTask
         return $this;
     }
 
-    public function getOnLoad()
+    public function getOnLoad(): callable
     {
         return $this->onLoadCallback;
     }
 
-    public function callOnLoad(array $result)
+    public function callOnLoad(array $result): bool
     {
         \call_user_func($this->getOnLoad(), $result, $this);
 
@@ -37,19 +38,19 @@ abstract class BaseTask
         return $this;
     }
 
-    public function getOnError()
+    public function getOnError(): callable
     {
         return $this->onErrorCallback;
     }
 
-    public function callOnError(CurlThreadError $error)
+    public function callOnError(CurlThreadError $error): bool
     {
         \call_user_func($this->getOnError(), $error, $this);
 
         return true;
     }
 
-    public function callCallbacks($error, array $result)
+    public function callCallbacks(?CurlThreadError $error, array $result): bool
     {
         if ($error && $this->getOnError()) {
             return $this->callOnError($error);
@@ -79,8 +80,13 @@ abstract class BaseTask
         return $this;
     }
 
-    public function getCurlOptions()
+    public function getCurlOptions(): array
     {
         return $this->curlOptions;
+    }
+
+    public function validate(): bool
+    {
+        return $this->onLoadCallback && $this->onErrorCallback;
     }
 }

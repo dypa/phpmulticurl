@@ -7,10 +7,13 @@ use SplObjectStorage;
 
 class Manager
 {
-    protected $threads = null;
-    protected $multiCurl = null;
+    private const SELECT_FAILURE_OR_TIMEOUT = -1;
+    private const FIX_CPU_USAGE_SLEEP = 250;
 
-    public function __construct($numberOfThreads)
+    private $threads = null;
+    private $multiCurl = null;
+
+    public function __construct(int $numberOfThreads)
     {
         $this->threads = new SplObjectStorage();
         $this->multiCurl = new MultiCurl();
@@ -18,7 +21,10 @@ class Manager
         $this->allocateThreads($numberOfThreads);
     }
 
-    public function find($resource)
+    /**
+     * @param $resource \resource 
+     */
+    public function find($resource): CurlThread
     {
         foreach ($this->threads as $thread) {
             if ($thread->isEqualResource($resource)) {
@@ -29,7 +35,7 @@ class Manager
         throw new \InvalidArgumentException('Resource not found in working threads');
     }
 
-    protected function allocateThreads($numberOfThreads)
+    private function allocateThreads(int $numberOfThreads): SplObjectStorage
     {
         for ($i = 0; $i < $numberOfThreads; ++$i) {
             $this->threads->attach(new CurlThread());
@@ -38,7 +44,7 @@ class Manager
         return $this->threads;
     }
 
-    protected function freeThreads()
+    private function freeThreads(): SplObjectStorage
     {
         foreach ($this->threads as $thread) {
             if ($thread->isInUse()) {
@@ -57,7 +63,7 @@ class Manager
         return $this->threads;
     }
 
-    protected function addThreadToLoop(curlThread $thread, Queue $queue)
+    private function addThreadToLoop(curlThread $thread, Queue $queue): bool
     {
         if ($queue->count() > 0 && $task = $queue->dequeue()) {
             $thread->setTask($task);
@@ -70,7 +76,7 @@ class Manager
         return false;
     }
 
-    protected function removeThreadFromLoop(curlThread $thread)
+    private function removeThreadFromLoop(curlThread $thread): bool
     {
         $this->multiCurl->removeThread($thread);
         $thread->removeTask();
@@ -78,7 +84,7 @@ class Manager
         return true;
     }
 
-    public function executeLoop(Queue $queue)
+    public function executeLoop(Queue $queue): bool
     {
         foreach ($this->threads as $thread) {
             $this->addThreadToLoop($thread, $queue);
@@ -87,17 +93,16 @@ class Manager
         $stillRunning = false;
         do {
             $this->multiCurl->execThreads();
-
-            $ready = $this->multiCurl->selectThread();
-            if ($ready) {
-                $stillRunning = $this->fetchResults($queue);
+            if (self::SELECT_FAILURE_OR_TIMEOUT === $this->multiCurl->selectThread()) {
+                usleep(self::FIX_CPU_USAGE_SLEEP);
             }
-        } while ($ready !== MultiCurl::SELECT_FAILURE_OR_TIMEOUT || $stillRunning);
+            $stillRunning = $this->fetchResults($queue);
+        } while ($stillRunning);
 
         return true;
     }
 
-    public function fetchResults(Queue $queue)
+    public function fetchResults(Queue $queue): bool
     {
         $return = false;
         while ($result = $this->multiCurl->readThread()) {
