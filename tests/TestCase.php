@@ -24,9 +24,10 @@ abstract class TestCase extends \PHPUnit\Framework\TestCase
             "-S",
             self::$hostAndPort,
             "-t",
-            realpath(__DIR__)
+            realpath(__DIR__) . "/website"
         ]);
         self::$webServerProcess->start();
+        sleep(2);
     }
 
     public static function tearDownAfterClass(): void

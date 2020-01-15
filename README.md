@@ -15,7 +15,7 @@ __Pull requests are very welcome.__
 * simple queue management
 * fully configured! supports callbacks onLoad, onError, full control on http headers
 * simple usage
-* no tests, docs :( sorry :(
+* few tests, no docs :( sorry :(
 
 ## Requires:
 
