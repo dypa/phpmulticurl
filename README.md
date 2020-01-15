@@ -19,7 +19,7 @@ __Pull requests are very welcome.__
 
 ## Requires:
 
-* php >= 7.3.10
+* php >= 7.1
 * ext-curl
 * safe_mode = Off
 
