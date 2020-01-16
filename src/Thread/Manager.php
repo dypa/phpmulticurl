@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PhpMultiCurl\Thread;
 
@@ -10,7 +11,7 @@ class Manager
     private const SELECT_FAILURE_OR_TIMEOUT = -1;
     private const FIX_CPU_USAGE_SLEEP = 250;
 
-    private $threads = null;
+    private $threads = [];
     private $multiCurl = null;
 
     public function __construct(int $numberOfThreads)
@@ -21,9 +22,6 @@ class Manager
         $this->allocateThreads($numberOfThreads);
     }
 
-    /**
-     * @param $resource \resource 
-     */
     public function find($resource): CurlThread
     {
         foreach ($this->threads as $thread) {
