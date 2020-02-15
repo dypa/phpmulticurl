@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PhpMultiCurl\Thread;
 
@@ -48,7 +49,7 @@ class MultiCurl
 
     public function checkResult(array $result, curlThread $thread): ?CurlThreadError
     {
-        return $result['result'] === \CURLE_OK ? null : new CurlThreadError($thread->getErrorCode(), $thread->getErrorMessage());
+        return $result['result'] === \CURLE_OK ? null : new CurlThreadError($thread->getErrorCode(), $thread->getErrorMessage(), $thread->getTask());
     }
 
     public function __destruct()

@@ -1,4 +1,5 @@
 <?php
+declare(strict_types=1);
 
 namespace PhpMultiCurl\Helper;
 
@@ -15,6 +16,6 @@ class Queue extends SplQueue
 
         $task->validate();
 
-        return parent::enqueue($task);
+        parent::enqueue($task);
     }
 }
