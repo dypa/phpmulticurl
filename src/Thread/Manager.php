@@ -88,7 +88,6 @@ class Manager
             $this->addThreadToLoop($thread, $queue);
         }
 
-        $stillRunning = false;
         do {
             $this->multiCurl->execThreads();
             if (self::SELECT_FAILURE_OR_TIMEOUT === $this->multiCurl->selectThread()) {
